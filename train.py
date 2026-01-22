@@ -3,7 +3,7 @@ import argparse
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import tqdm as tqdm
+from tqdm import tqdm
 
 from config import CFG
 from models import Generator, Discriminator
@@ -21,7 +21,7 @@ def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--epochs", type = int, default = CFG.epochs)
     p.add_argument("--batch_size", type = int, default = CFG.batch_size)
-    p.add_argument("--learning_rate", type = float, default = CFG.learning_rate)
+    p.add_argument("--lr", type = float, default = CFG.lr)
     p.add_argument("--seed", type = int, default = CFG.seed)
     p.add_argument("--force_cpu", action = "store_true", help = "Force CPU even if CUDA is available")
     p.add_argument("--resume", type = str, default = "", help = "Path to checkpoint to resume from.")
@@ -42,8 +42,8 @@ def main():
     G = Generator(CFG.z_dim, CFG.num_classes, CFG.g_base_channels).to(device)
     D = Discriminator(CFG.num_classes, CFG.d_base_channels).to(device)
 
-    opt_G = optim.Adam(G.parameters(), lr = args.learning_rate, betas = CFG.betas)
-    opt_D = optim.Adam(D.parameters(), lr = args.learning_rate, betas = CFG.betas)
+    opt_G = optim.Adam(G.parameters(), lr = 2e-4, betas = CFG.betas)
+    opt_D = optim.Adam(D.parameters(), lr = 1e-4, betas = CFG.betas)
     criterion = nn.BCELoss()
 
     start_epoch = 0
@@ -66,7 +66,7 @@ def main():
             labels = labels.to(device)
             bsz = real_imgs.size(0)
 
-            real_target = torch.ones(bsz, 1, device = device)
+            real_target = torch.full((bsz, 1), 0.9, device = device)
             fake_target = torch.zeros(bsz, 1, device = device)
 
             # 1. Train Discriminator
@@ -94,12 +94,12 @@ def main():
             pbar.set_postfix(D_loss=f"{last_d_loss:.4f}", G_loss=f"{last_g_loss:.4f}")
 
         # Save sample grid (one per class)
-        if (epoch + 1) % CFG.sample_every_epochs == 0:
+        if (epoch + 1) % CFG.sample_epochs == 0:
             out_img = os.path.join(CFG.samples_dir, f"epoch_{epoch+1:03d}.png")
             save_class_grid(G, device, CFG.z_dim, CFG.num_classes, out_img)
 
         # Save checkpoint
-        if (epoch + 1) % CFG.save_every_epochs == 0:
+        if (epoch + 1) % CFG.save_epochs == 0:
             ckpt_path = os.path.join(CFG.checkpoints_dir, f"cgan_epoch_{epoch+1:03d}.pt")
             save_checkpoint(ckpt_path, G, D, opt_G, opt_D, epoch + 1)
 

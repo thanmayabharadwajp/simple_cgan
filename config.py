@@ -11,7 +11,7 @@ class Config:
     img_size : int = 28
     img_channels : int = 128
     img_channels : int = 1
-    num_classes : 10
+    num_classes : int = 10
 
     # model
     z_dim: int = 100
@@ -21,7 +21,7 @@ class Config:
     # training
     epochs : int = 30 # can be higher for GPU
     batch_size : int = 128
-    learning_rate : float = 2e-4
+    lr : float = 2e-4
     betas : tuple = (0.5, 0.999)
     num_workers : int = 2
 

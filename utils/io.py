@@ -9,7 +9,7 @@ def save_checkpoint(path : str, generator, discriminator, opt_g, opt_d, epoch : 
         "epoch" : epoch,
         "generator" : generator.state_dict(),
         "discriminator" : discriminator.state_dict(),
-        "opt_g" : opt_g.state.dict(),
+        "opt_g" : opt_g.state_dict(),
         "opt_d" : opt_d.state_dict()
     }
     torch.save(payload, path)

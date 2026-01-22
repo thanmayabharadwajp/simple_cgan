@@ -16,8 +16,8 @@ class Generator(nn.Module):
         )
 
         self.deconv = nn.Sequential(
-            nn.ConvTranspose2D(base_channels, base_channels // 2,4,2,1),
-            nn.BatchNorm2d (base_channels // 2),
+            nn.ConvTranspose2d(base_channels, base_channels // 2,4,2,1),
+            nn.BatchNorm2d(base_channels // 2),
             nn.ReLU(True),
 
             nn.ConvTranspose2d(base_channels // 2,1,4,2,1),
