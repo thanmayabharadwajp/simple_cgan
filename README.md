@@ -1,4 +1,4 @@
-# cGAN Benchmark (Fashion-MNIST) — CPU first, GPU later
+# cGAN Benchmark (Fashion-MNIST)
 
 A clean, baseline conditional GAN (cGAN) for Fashion-MNIST, designed for benchmarking.
 - Generator: (z, label) -> image
