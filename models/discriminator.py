@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class Discriminator(nn.Module):
-    def __init__(self, num_classes : int, base_channels : int =64):
+    def __init__(self, num_classes : int, base_channels : int = 64):
         super().__init__()
         self.num_classes = num_classes
 

@@ -9,7 +9,6 @@ class Config:
     dataset : str = "FashionMNIST"
     data_root : str = "data"
     img_size : int = 28
-    img_channels : int = 128
     img_channels : int = 1
     num_classes : int = 10
 
@@ -20,7 +19,7 @@ class Config:
 
     # training
     epochs : int = 30 # can be higher for GPU
-    batch_size : int = 128
+    batch_size : int = 32
     lr : float = 2e-4
     betas : tuple = (0.5, 0.999)
     num_workers : int = 2

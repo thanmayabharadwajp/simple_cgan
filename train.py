@@ -71,13 +71,15 @@ def main():
 
             # 1. Train Discriminator
 
+            opt_D.zero_grad(set_to_none=True)
+
             z = torch.randn(bsz, CFG.z_dim, device = device)
             fake_imgs = G(z, labels)
 
             d_real = D(real_imgs, labels)
             d_fake = D(fake_imgs.detach(), labels)
             d_loss = criterion(d_real, real_target) + criterion(d_fake, fake_target)
-
+            d_loss.backward()
             opt_D.step()
 
             # 2. Train generator
