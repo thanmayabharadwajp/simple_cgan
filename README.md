@@ -7,7 +7,7 @@ A clean, baseline conditional GAN (cGAN) for Fashion-MNIST, designed for benchma
 ## Setup
 ```bash
 pip install -r requirements.txt
-
+```
 
 Conditional GAN (cGAN) Benchmark – Fashion-MNIST
 
